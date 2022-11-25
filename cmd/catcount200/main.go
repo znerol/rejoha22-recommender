@@ -20,7 +20,7 @@ func main() {
 
 	fmt.Printf("Popularity\tCategory\n")
 	for _, entry := range popularity.NewOrderedCategoryList(ranking) {
-		fmt.Printf("%d\t%s\n", entry.Popularity, entry.Category)
+		fmt.Printf("%.2f\t%s\n", entry.Score, entry.Category)
 	}
 
 }

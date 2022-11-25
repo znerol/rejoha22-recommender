@@ -18,9 +18,9 @@ func main() {
 
 	ranking := popularity.NewSumAggregation(lines)
 
-	fmt.Printf("Popularity\tCategory\n")
+	fmt.Printf("Score\tCategory\n")
 	for _, entry := range popularity.NewOrderedCategoryList(ranking) {
-		fmt.Printf("%d\t%s\n", entry.Popularity, entry.Category)
+		fmt.Printf("%.2f\t%s\n", entry.Score, entry.Category)
 	}
 
 }
