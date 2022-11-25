@@ -18,6 +18,6 @@ func main() {
 
 	fmt.Printf("Popularity\tCategory\tTitle\tId\n")
 	for _, line := range lines {
-		fmt.Printf("%d\t%s\t%s\t%s\n", line.Popularity, line.Category, line.Title, line.Id)
+		fmt.Printf("%f\t%s\t%s\t%s\n", line.Popularity, line.Category, line.Title, line.Id)
 	}
 }

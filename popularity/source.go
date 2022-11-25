@@ -13,7 +13,7 @@ import (
 type Id string
 type Title string
 type Category string
-type Popularity int
+type Popularity float64
 
 type PopularityRecord struct {
 	Id         Id
