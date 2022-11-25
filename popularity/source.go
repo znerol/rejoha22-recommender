@@ -22,8 +22,10 @@ type PopularityRecord struct {
 	Popularity Popularity
 }
 
+type PopularityList []PopularityRecord
+
 type PopularitySource interface {
-	Load(count int) ([]PopularityRecord, error)
+	Load(count int) (PopularityList, error)
 }
 
 type srgPopularitySource struct {
@@ -57,8 +59,8 @@ type srgResponse struct {
 	MediaList []srgMediaEntry `json:"mediaList"`
 }
 
-func (s srgPopularitySource) Load(count int) ([]PopularityRecord, error) {
-	result := []PopularityRecord{}
+func (s srgPopularitySource) Load(count int) (PopularityList, error) {
+	result := PopularityList{}
 
 	remaining := count
 	base := "https://api.srgssr.ch/videometadata/v2/most_clicked?bu=srf"

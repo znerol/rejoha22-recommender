@@ -3,15 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
-	"sort"
 
 	"github.com/znerol/rejoha22-recommender/popularity"
 )
-
-type rankEntry struct {
-	Popularity popularity.Popularity
-	Category   popularity.Category
-}
 
 func main() {
 	source := popularity.NewPopularitySource()
@@ -22,25 +16,10 @@ func main() {
 		panic(err)
 	}
 
-	ranking := map[popularity.Category]popularity.Popularity{}
-	for _, line := range lines {
-		ranking[line.Category] += line.Popularity
-	}
-
-	rankList := []rankEntry{}
-	for category, popularity := range ranking {
-		rankList = append(rankList, rankEntry{
-			Category:   category,
-			Popularity: popularity,
-		})
-	}
-
-	sort.Slice(rankList, func(i, j int) bool {
-		return rankList[i].Popularity > rankList[j].Popularity
-	})
+	ranking := popularity.NewSumAggregation(lines)
 
 	fmt.Printf("Popularity\tCategory\n")
-	for _, entry := range rankList {
+	for _, entry := range popularity.NewOrderedCategoryList(ranking) {
 		fmt.Printf("%d\t%s\n", entry.Popularity, entry.Category)
 	}
 
