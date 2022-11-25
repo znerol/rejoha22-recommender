@@ -71,29 +71,10 @@ func (s srgPopularitySource) Load(count int) (PopularityList, error) {
 		if next != "" {
 			pageUrl = fmt.Sprintf("%s&next=%s", base, next)
 		}
-		req, reqErr := http.NewRequest("GET", pageUrl, nil)
-		if reqErr != nil {
-			return result, reqErr
-		}
 
-		req.Header.Add("Accept", "application/json")
-		req.Header.Add("Authorization", strings.Join([]string{"Bearer", s.token}, " "))
-
-		log.Println("Attempting to fetch", pageUrl)
-		res, resErr := s.client.Do(req)
-		if resErr != nil {
-			return result, resErr
-		}
-		if res.StatusCode != 200 {
-			return result, fmt.Errorf("failed to fetch resource: HTTP status=%d", res.StatusCode)
-		}
-
-		defer res.Body.Close()
-
-		target := &srgResponse{}
-		jsonErr := json.NewDecoder(res.Body).Decode(target)
-		if jsonErr != nil {
-			return result, jsonErr
+		target, pageErr := s.loadPage(pageUrl)
+		if pageErr != nil {
+			return result, nil
 		}
 
 		for _, mediaEntry := range target.MediaList {
@@ -125,6 +106,36 @@ func (s srgPopularitySource) Load(count int) (PopularityList, error) {
 			return result, nil
 		}
 		next = nextUrl.Query().Get("next")
+	}
+
+	return result, nil
+}
+
+func (s srgPopularitySource) loadPage(url string) (*srgResponse, error) {
+	result := &srgResponse{}
+
+	req, reqErr := http.NewRequest("GET", url, nil)
+	if reqErr != nil {
+		return result, reqErr
+	}
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", strings.Join([]string{"Bearer", s.token}, " "))
+
+	log.Println("Attempting to fetch", url)
+	res, resErr := s.client.Do(req)
+	if resErr != nil {
+		return result, resErr
+	}
+	if res.StatusCode != 200 {
+		return result, fmt.Errorf("failed to fetch resource: HTTP status=%d", res.StatusCode)
+	}
+
+	defer res.Body.Close()
+
+	jsonErr := json.NewDecoder(res.Body).Decode(result)
+	if jsonErr != nil {
+		return result, jsonErr
 	}
 
 	return result, nil
