@@ -1,6 +1,7 @@
 package popularity
 
 import (
+	"math"
 	"sort"
 )
 
@@ -20,6 +21,14 @@ func NewSumAggregation(records PopularityList) CategoryRanking {
 	ranking := CategoryRanking{}
 	for _, record := range records {
 		ranking[record.Category] += Score(record.Popularity)
+	}
+	return ranking
+}
+
+func NewMaxAggregation(records PopularityList) CategoryRanking {
+	ranking := CategoryRanking{}
+	for _, record := range records {
+		ranking[record.Category] = Score(math.Max(float64(ranking[record.Category]), float64(record.Popularity)))
 	}
 	return ranking
 }
