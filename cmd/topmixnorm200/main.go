@@ -18,6 +18,6 @@ func main() {
 
 	fmt.Printf("Score\tPopularity\tCategory\tTitle\tId\n")
 	for _, line := range popularity.NewNormalizedPopularityList(lines, 1, 2) {
-		fmt.Printf("%f\t%f\t%s\t%s\t%s\n", line.Score, line.Popularity, line.Category, line.Title, line.Id)
+		fmt.Printf("%.2f\t%.0f\t%s\t%s\t%s\n", line.Score, line.Popularity, line.Category, line.Title, line.Id)
 	}
 }
