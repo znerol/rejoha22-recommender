@@ -5,8 +5,6 @@ import (
 	"sort"
 )
 
-type Score float64
-
 type CategoryRanking map[Category]Score
 
 func NewCountAggregation(records PopularityList) CategoryRanking {

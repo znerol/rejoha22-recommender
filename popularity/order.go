@@ -13,12 +13,13 @@ func NewNormalizedPopularityList(records PopularityList) PopularityList {
 			Id:         record.Id,
 			Title:      record.Title,
 			Category:   record.Category,
-			Popularity: Popularity(normalizedScore),
+			Popularity: record.Popularity,
+			Score:      Score(normalizedScore),
 		})
 	}
 
 	sort.Slice(result, func(i, j int) bool {
-		return result[i].Popularity > result[j].Popularity
+		return result[i].Score > result[j].Score
 	})
 
 	return result

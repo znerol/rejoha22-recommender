@@ -14,12 +14,14 @@ type Id string
 type Title string
 type Category string
 type Popularity float64
+type Score float64
 
 type PopularityRecord struct {
 	Id         Id
 	Title      Title
 	Category   Category
 	Popularity Popularity
+	Score      Score
 }
 
 type PopularityList []PopularityRecord
@@ -96,6 +98,7 @@ func (s srgPopularitySource) Load(count int) (PopularityList, error) {
 				Title:      Title(mediaEntry.Title),
 				Category:   Category(category),
 				Popularity: Popularity(popularity),
+				Score:      Score(popularity),
 			}
 			result = append(result, rec)
 		}
