@@ -1,7 +1,34 @@
 REJOHA 2022 - Responsible News Recommender Systems
 ==================================================
 
-https://hack.opendata.ch/project/893
+This repository contains results for the
+[Responsible News Recommender Systems](https://hack.opendata.ch/project/893)
+challange at Rethink Journalism Hackaton 2022. Note that a responsible
+recommender systems is an entire field of research in itself. This project
+barely scratches the surface of it.
+
+## Project goals
+
+News sites often present a list of most-clicked content to their users. Since
+some categories of content are more popular than others (e.g., News and Sports),
+there is a risk that popular content from under-represented categories just
+never makes it onto these lists.
+
+This project explores ways to boost the diversity of categories represented in
+most-clicked content lists.
+
+## Data / Tools / License
+
+Data is sourced from the SRG-SSR
+[mostClicked](https://developer.srgssr.ch/apis/srgssr-video/docs/mostclicked)
+endpoint for video content.
+
+A developer account at SRG-SSR developer portal is necessary to run the software
+and reproduce the results presented here. See the
+[FAQ](https://developer.srgssr.ch/faq) for more info.
+
+Source code is written in [go](https://go.dev/) and released under the
+[unlicence](http://unlicense.org/).
 
 ## Step 1: Scrape data from SRG most-clicked video endpoint
 
